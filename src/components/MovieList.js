@@ -1,7 +1,7 @@
 import React from "react";
 import MovieView from "./MovieView";
 
-const MovieList = ({ movies }) => {
+const MovieList = ({ movies, nominations }) => {
     let number = 0
     const increment = () => {
         return number = number + 1;
@@ -18,10 +18,8 @@ const MovieList = ({ movies }) => {
   } else if (typeof movies.data.Search === 'undefined') {
       return <MovieView movie= {movies.data} />
   } else {
-    
     const listItems = (movies.data.Search).map((movie) => (
-      <MovieView movie={movie} number = {increment()}/>
-       
+      <MovieView movie={movie} number={increment()} nomination={nominations}/>
     ));
 
     return listItems ;

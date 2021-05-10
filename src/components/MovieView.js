@@ -1,6 +1,6 @@
 import React from "react";
 
-const MovieView = ({ movie, number }) => {
+const MovieView = ({ movie, number, nomination }) => {
 
     return(
        
@@ -11,7 +11,7 @@ const MovieView = ({ movie, number }) => {
           <p>
           Released in {movie.Year}
           </p>
-          
+        <button className="btn btn-primary" value={movie.Title} onClick={nomination}>Nominate</button>
         </div>
       </div>
     )

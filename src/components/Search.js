@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MovieList from "./MovieList";
+import NominationDisplay from './NominationDisplay'
 
 
 const Search = () => {
   const [searchTerm, updateSearchTerm] = useState("");
   const [debouncedTerm, updateDebouncedTerm] = useState(searchTerm);
   const [searchResults, setSearchResults] = useState([]);
-  //const [nominations, updateNominations] = useState([])
+  const [nominations, updateNominations] = useState([])
 
-  //const addNomination = (newNomination) => {
-  //  updateNominations(nominations.concat(newNomination))
-  //}
+  const addNomination = () => {
+    updateNominations(nominations.concat('newNomination'))
+  }
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -59,7 +60,8 @@ const Search = () => {
           placeholder="Enter movie name"
         ></input>
       </div>
-      <MovieList movies={searchResults} />
+      <MovieList movies={searchResults} nominations={addNomination}/>
+      <NominationDisplay nominations={nominations} /> 
     </div>
   );
 };
