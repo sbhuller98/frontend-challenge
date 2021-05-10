@@ -7,11 +7,11 @@ const Search = () => {
   const [searchTerm, updateSearchTerm] = useState("");
   const [debouncedTerm, updateDebouncedTerm] = useState(searchTerm);
   const [searchResults, setSearchResults] = useState([]);
-  const [nominations, updateNominations] = useState([])
+  //const [nominations, updateNominations] = useState([])
 
-  const addNomination = (newNomination) => {
-    updateNominations(nominations.concat(newNomination))
-  }
+  //const addNomination = (newNomination) => {
+  //  updateNominations(nominations.concat(newNomination))
+  //}
 
   useEffect(() => {
     const timeout = setTimeout(() => {
