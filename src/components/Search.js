@@ -1,27 +1,33 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import MovieList from "./MovieList";
+
 
 const Search = () => {
   const [searchTerm, updateSearchTerm] = useState("");
   const [debouncedTerm, updateDebouncedTerm] = useState(searchTerm);
   const [searchResults, setSearchResults] = useState([]);
+  const [nominations, updateNominations] = useState([])
+
+  const addNomination = (newNomination) => {
+    updateNominations(nominations.concat(newNomination))
+  }
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (searchTerm) {
-        updateDebouncedTerm(searchTerm)
+        updateDebouncedTerm(searchTerm.replace(/\s*$/,''));
       }
     }, 500);
     return () => {
       clearTimeout(timeout);
     };
-  }
-, [searchResults, searchTerm]);
+  }, [searchTerm]);
 
   useEffect(() => {
     const getResults = async () => {
       const data = await axios.get(
-        "http://www.omdbapi.com/?i=tt3896198&apikey=f9c3273",
+        "http://www.omdbapi.com/?i=tt3896198&apikey=fb6dc498",
         {
           params: {
             s: debouncedTerm,
@@ -29,10 +35,14 @@ const Search = () => {
           },
         }
       );
-      setSearchResults(data);
-      console.log(data.data.Search)
+      console.log(data)
+      if (data.data.Response === "False") {
+        setSearchResults(data.data.Error);
+      } else {
+        setSearchResults(data);
+      }
     };
-    getResults()
+    getResults();
   }, [debouncedTerm]);
 
   return (
@@ -49,9 +59,9 @@ const Search = () => {
           placeholder="Enter movie name"
         ></input>
       </div>
+      <MovieList movies={searchResults} />
     </div>
   );
 };
 
 export default Search;
-
