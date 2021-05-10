@@ -11,7 +11,7 @@ const MovieView = ({ movie, number }) => {
           <p>
           Released in {movie.Year}
           </p>
-          <button className="btn btn-outline-dark">Nominate Movie</button>
+          
         </div>
       </div>
     )
