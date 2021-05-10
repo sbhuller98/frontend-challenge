@@ -27,7 +27,7 @@ const Search = () => {
   useEffect(() => {
     const getResults = async () => {
       const data = await axios.get(
-        "http://www.omdbapi.com/?i=tt3896198&apikey=fb6dc498",
+        "https://www.omdbapi.com/?i=tt3896198&apikey=fb6dc498",
         {
           params: {
             s: debouncedTerm,
