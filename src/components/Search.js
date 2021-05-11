@@ -15,6 +15,29 @@ const Search = () => {
     updateNominations(arr);
   };
 
+  const removeNomination = (nom) => {
+    let index = -1
+    let i;
+    if (nominations.length === 0) {
+      return
+    }
+    for (i=0; i < nominations.length; i++ ) {
+      if (nominations[i][0] === nom) {
+          index = i;
+          break;
+      }
+    }
+    console.log('in removal')
+  console.log(nom)
+  console.log(nominations[0][0])
+    let arr = [...nominations];
+    if (index > -1) {
+      arr.splice(index, 1)
+    }
+    console.log(arr)
+    updateNominations(arr);
+  }
+
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (searchTerm) {
@@ -63,8 +86,12 @@ const Search = () => {
           placeholder="Enter movie name"
         ></input>
       </div>
-      <MovieList movies={searchResults} nominations={addNomination} />
-      <NominationDisplay nominations={nominations} />
+      <div className="float-left">
+        <MovieList movies={searchResults} nominations={addNomination} />
+      </div>
+      <div className="float-right">
+        <NominationDisplay nominations={nominations} removeNoms = {removeNomination} />
+      </div>
     </div>
   );
 };
