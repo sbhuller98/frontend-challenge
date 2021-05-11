@@ -11,7 +11,7 @@ const MovieView = ({ movie, number, nomination }) => {
           <p>
           Released in {movie.Year}
           </p>
-        <button className="btn btn-primary" value={movie.Title} onClick={nomination}>Nominate</button>
+        <button className="btn btn-primary" value={[movie.Title, parseInt(movie.Year)]} onClick={(e) => nomination(e.target.value)}>Nominate</button>
         </div>
       </div>
     )

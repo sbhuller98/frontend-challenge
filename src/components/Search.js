@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import MovieList from "./MovieList";
-import NominationDisplay from './NominationDisplay'
-
+import NominationDisplay from "./NominationDisplay";
 
 const Search = () => {
   const [searchTerm, updateSearchTerm] = useState("");
   const [debouncedTerm, updateDebouncedTerm] = useState(searchTerm);
   const [searchResults, setSearchResults] = useState([]);
-  const [nominations, updateNominations] = useState([])
+  const [nominations, updateNominations] = useState([]);
 
-  const addNomination = () => {
-    updateNominations(nominations.concat('newNomination'))
-  }
+  const addNomination = (newNomination) => {
+    let arr = [...nominations];
+    arr.push([newNomination]);
+    updateNominations(arr);
+  };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (searchTerm) {
-        updateDebouncedTerm(searchTerm.replace(/\s*$/,''));
+        updateDebouncedTerm(searchTerm.replace(/\s*$/, ""));
       }
     }, 500);
     return () => {
@@ -26,24 +27,26 @@ const Search = () => {
   }, [searchTerm]);
 
   useEffect(() => {
-    const getResults = async () => {
-      const data = await axios.get(
-        "https://www.omdbapi.com/?i=tt3896198&apikey=fb6dc498",
-        {
-          params: {
-            s: debouncedTerm,
-            type: "movie",
-          },
+    if (debouncedTerm !== "") {
+      const getResults = async () => {
+        const data = await axios.get(
+          "https://www.omdbapi.com/?i=tt3896198&apikey=fb6dc498",
+          {
+            params: {
+              s: debouncedTerm,
+              type: "movie",
+            },
+          }
+        );
+        console.log(data);
+        if (data.data.Response === "False") {
+          setSearchResults(data.data.Error);
+        } else {
+          setSearchResults(data);
         }
-      );
-      console.log(data)
-      if (data.data.Response === "False") {
-        setSearchResults(data.data.Error);
-      } else {
-        setSearchResults(data);
-      }
-    };
-    getResults();
+      };
+      getResults();
+    }
   }, [debouncedTerm]);
 
   return (
@@ -60,8 +63,8 @@ const Search = () => {
           placeholder="Enter movie name"
         ></input>
       </div>
-      <MovieList movies={searchResults} nominations={addNomination}/>
-      <NominationDisplay nominations={nominations} /> 
+      <MovieList movies={searchResults} nominations={addNomination} />
+      <NominationDisplay nominations={nominations} />
     </div>
   );
 };
