@@ -1,20 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 
 const MovieView = ({ movie, number, nomination }) => {
-
-    return(
-       
-        <div className="card border-primary p-3 m-4" style={{width: "30rem"}}>
-        <div className="card-header bg-info">{number}</div>
-        <div className="card-body">
-          <h4 className="card-title">{movie.Title}</h4>
-          <p>
-          Released in {movie.Year}
-          </p>
-        <button className="btn btn-primary" value={[movie.Title, parseInt(movie.Year)]} onClick={(e) => nomination(e.target.value)}>Nominate</button>
+  const [isButtonClicakble, updateButton] = useState(false);
+  return (
+    <div className="card border-dark p-1 mx-5 my-1" style={{ width: "20rem" }}>
+      <div className="card-body">
+        <div style={{display: "inline-block"}}>
+          <p style={{display: "inline"}}>{number}.</p>
+          <h4 style={{display: "inline"}} className="card-title inline"> {movie.Title}</h4>
         </div>
+        <p>Released in {movie.Year}</p>
+        <button
+          className="btn btn-outline-primary"
+          value={[movie.Title, parseInt(movie.Year)]}
+          disabled={isButtonClicakble}
+          onClick={(e) => {
+            nomination(e.target.value);
+            updateButton(true);
+          }}
+        >
+          Nominate
+        </button>
       </div>
-    )
-}
+    </div>
+  );
+};
 
-export default MovieView
+export default MovieView;

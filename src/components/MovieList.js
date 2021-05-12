@@ -6,7 +6,6 @@ const MovieList = ({ movies, nominations }) => {
     const increment = () => {
         return number = number + 1;
     }
-    console.log(typeof movies)
     if (typeof movies === 'string') {
         console.log('test')
         return <h2>{movies}</h2>
@@ -19,7 +18,7 @@ const MovieList = ({ movies, nominations }) => {
       return <MovieView movie= {movies.data} />
   } else {
     const listItems = (movies.data.Search).map((movie) => (
-      <MovieView movie={movie} number={increment()} nomination={nominations}/>
+      <MovieView key={movie.imdbID} movie={movie} number={increment()} nomination={nominations}/>
     ));
 
     return listItems ;

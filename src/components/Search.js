@@ -16,27 +16,25 @@ const Search = () => {
   };
 
   const removeNomination = (nom) => {
-    let index = -1
+    let index = -1;
     let i;
     if (nominations.length === 0) {
-      return
+      return;
     }
-    for (i=0; i < nominations.length; i++ ) {
+    for (i = 0; i < nominations.length; i++) {
       if (nominations[i][0] === nom) {
-          index = i;
-          break;
+        index = i;
+        break;
       }
     }
-    console.log('in removal')
-  console.log(nom)
-  console.log(nominations[0][0])
+
     let arr = [...nominations];
     if (index > -1) {
-      arr.splice(index, 1)
+      arr.splice(index, 1);
     }
-    console.log(arr)
+    console.log(arr);
     updateNominations(arr);
-  }
+  };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
@@ -73,24 +71,29 @@ const Search = () => {
   }, [debouncedTerm]);
 
   return (
-    <div>
-      <h3>Search for a movie</h3>
-      <div className="form-group">
-        <label htmlFor="name">Name</label>
-        <input
-          className="form-control"
-          value={searchTerm}
-          onChange={(e) => updateSearchTerm(e.target.value)}
-          type="text"
-          id="search"
-          placeholder="Enter movie name"
-        ></input>
+    <div className="row">
+      <div className="col-sm-12 m-4 p-3 bg-dark">
+        <h3 className="text-white">Search for a movie</h3>
+        <div className="form-group">
+          <label className="text-white" htmlFor="name">Name</label>
+          <input
+            className="form-control"
+            value={searchTerm}
+            onChange={(e) => updateSearchTerm(e.target.value)}
+            type="text"
+            id="search"
+            placeholder="Enter movie name"
+          ></input>
+        </div>
       </div>
-      <div className="float-left">
+      <div className="col-sm-8">
         <MovieList movies={searchResults} nominations={addNomination} />
       </div>
-      <div className="float-right">
-        <NominationDisplay nominations={nominations} removeNoms = {removeNomination} />
+      <div className="col-sm-4">
+        <NominationDisplay
+          nominations={nominations}
+          removeNoms={removeNomination}
+        />
       </div>
     </div>
   );
